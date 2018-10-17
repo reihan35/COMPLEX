@@ -12,7 +12,7 @@ def sac_a_dos(R, T_max):
         U.append(int(random.uniform(1,R)))
         P.append(int(random.uniform(1,R)))
 
-    b = int((1/2) * np.sum(np.array(P)))
+    b = int(1.0/2 * np.sum(np.array(P)))
 
     return U, P, b
 
@@ -44,8 +44,71 @@ def algo_glout(sac):
            
     return sac_fin
 
-
-
-            
+def b_and_b_1(sac):
+    U = np.array(sac[0])
+    P = np.array(sac[1])
+    b = np.array(sac[2])
+    n = len(U)
     
-print(algo_glout(sac_a_dos(10, 5)))
+    pile = []
+    
+    #current_solution = []
+    #current_p = []
+    #pile.append(current_solution)
+    
+    binary_list = np.zeros(n)
+    
+    solutions = []
+    pile = [(binary_list, 0)]
+    
+    while pile != []:
+      #  print(pile)
+        current_blist, i = pile.pop()
+        #print(i)
+        if i != n:
+            new_blist = current_blist.copy()
+            new_blist[i] = 1
+            
+            pile.append((new_blist, i+1))
+            pile.append((current_blist, i+1))
+        else:
+             #print(pile)
+            solutions.append(current_blist)
+            
+    best_u = 0
+    best_s = []
+
+
+    s_u = 0
+        smax = 0
+        pmax = 0
+        somme = 0
+        poids = 0
+    #print(solutions)
+    for s in solutions:
+        s = np.array(s)
+        #print(s, np.array(U[np.argwhere(s == 1.)]),np.array(P[np.where(s == 1.)]))
+        #s_u = np.array(U[np.argwhere(s == 1.)]).sum()
+        #s_p = np.array(P[np.argwhere(s == 1.)]).sum()
+        
+            for i in x :
+                somme = somme + U[i]
+                poids = poids + P[i]
+            if somme > smax:
+                smax = somme 
+        
+        print(s, s_u, s_p)
+        if s_p > b:
+            continue
+        else:
+            if best_u < s_u:
+                best_u = s_u
+                best_s = s
+                
+    return best_s
+            
+sac = sac_a_dos(10,2)
+print(sac)
+print(b_and_b_1(sac_a_dos(10,2)))    
+#print(sac_a_dos(10,2))
+#print(algo_glout(sac_a_dos(10, 5)))
