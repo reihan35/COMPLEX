@@ -5,13 +5,16 @@ Created on Wed Nov 21 11:03:16 2018
 
 @author: 3522144
 """
+from math import *
+
+'''
 
 import numpy as np
 import matplotlib.pyplot as plt
 import time
 import random
 from math import *
-'''
+
 def divis_pos(n):
     l=[]
     for x in range(1,n+1):
@@ -81,15 +84,56 @@ def my_gcd(a,b) :
     else :
         r=a%b
         return algo_euclide(b,r)
-"""
+
 def l(n):
     if log(n)/log(2) - int(log(n)/log(2)) == 0 : 
-        return [log(n)/log(2)]
+		return [int(log(n)/log(2))]
     else: 
-        return l(n-(2**int(log(n)/log(2)))).append(log(n)/log(2))'''
+		#print(log(n)/log(2))
+        return [int(log(n)/log(2))] + l(n-(2**int(log(n)/log(2))))
 
-print(l(25))  """
-     
+def binary(n,z):
+	l = []
+	#print(z)
+	for i in range (0,int(log(n)/log(2))+1):
+		#print(i)
+		if i in z :
+			l.append(1)
+		else:
+			l.append(0)
+	return l[::-1]
+
+#print(binary(4,l(4))) 
+
+
+def exp_dis_bin(N,g,n):
+	h=1
+	print(n)
+	for i in range (len(n)-1,0-1,-1):
+		#print(i)
+		h = (h**2)%N
+		print("ici " + str(h))
+		if n[i]==1:
+			h=(h*g)%N
+			#print(h)
+	return h
+
+def modular_pow(base, exponent, modulus):
+	result=1
+	while (exponent > 0):
+		base = (base * base)%modulus
+		if ((exponent%2) == 1):
+			result = (result * base)%modulus
+		exponent = exponent - 1
+	return result
+
+#print(modular_pow(589,73,896))
+print(exp_dis_bin(589,73,binary(896,l(896))))
+#print(exp_dis_bin(896,589,binary(73,l(73))))
+
+#g^n mod N
+
+"""     
 T_pgcd = []
 T_inverse = []
 
@@ -137,4 +181,4 @@ plt.show()
 #print(x[k], T_pgcd[k])
 
 #print(table(5))x
-#print(my_inverse(11,3))
+#print(my_inverse(11,3))"""
