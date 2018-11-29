@@ -136,8 +136,8 @@ def trois_qr():
 			 q = i/(3*r)
 			 print(str(p) + '*' + str(q) + '*' + str(r) + "=" + str(i))
 
-"""   
-def miller_rabin(n):
+   
+def miller_rabin3(n):
 	
 	if n==0 or n==1 or n==4 or n==6 or n==8 or n==9:
 		return False
@@ -156,7 +156,7 @@ def miller_rabin(n):
 	for i in range(T):
 		a = random.randrange(2, n)
 		bon = True
-		if pow(a, m, n) == 1:
+		if pow(a,m,n) == 1:
 			bon = False
 		else:
 			for i in range(m):
@@ -167,42 +167,89 @@ def miller_rabin(n):
 	return True
         
  
-print(miller_rabin(651))"""
+print(miller_rabin3(651))
 
 
+def prim_base_a(n,a):
+	h = 0
+	m = n-1
+	cpt = 1
+	while m%2==0:
+		m>>=1
+		h+=1
+	
+	b = my_expo_mod(a,m,n)
+	#print("b " + str(b) )
+	
+	if b!=1 and b!=n-1:
+		for i in range (1,h):
+			cpt = cpt + 1
+			if my_expo_mod(b,2,n) == 1:
+				return False
+			if my_expo_mod(b,2,n) == n-1:
+				return True
+			b = my_expo_mod(b,2,n)
+		if cpt == h - 1:
+			return False
+	return True 
+
+def miller_rabin2(n):
+	T = 8
+	for i in range(1,T+1):
+		inverses = all_inverse(n)
+		x = random.randrange(0, len(inverses)-1)
+		a = inverses[x]
+		#print("a" + str(a))
+		if prim_base_a(n,a) == False:
+			return False
+	return True
+
+#print(miller_rabin2(78))
 
 def miller_rabin(n):
 		
 	h = 0
 	m = n-1
-	bon = True
-	T = 5
+	T = 16
+	yes = True
 	
 	while m%2==0:
 		m>>=1
 		h+=1
-	print(m)
-	print(h)
+	#print(m)
+	#print(h)
 	
-	for i in range(T):
+	for i in range(1,T+1):
 		inverses = all_inverse(n)
-		x = random.randrange(0, len(inverses))
+		x = random.randrange(0, len(inverses)-1)
 		a = inverses[x]
 		b = my_expo_mod(a,m,n)
-		print("b "+str(b))
-		if b!=1 and b != n-1:
+		#print(inverses)
+		#print("b "+str(b))
+		if b!=1 and b!= n-1:
 			#print("o")
-			for j in range(1,h):
-				print(h)
+			for j in range(1,h-2):
+				#print(j)
 				if b!= n-1 and my_expo_mod(b,2,n) == 1:
-					return False
-			b = my_expo_mod(b,2,n)
-		if b != n-1:
-			print("o")
-			return False		
-	return True
-        
-print(miller_rabin(17))
+					#print(my_expo_mod(b,2,n))
+					yes = yes and False
+				b = my_expo_mod(b,2,n)
+				#print("b2 "+str(b))
+			#print("b2 "+str(b))
+			if b != n-1:
+				#print("c " + str(b))
+				yes = yes and False		
+	return yes
+
+
+for i in range(4,100):
+	print(miller_rabin2(i))
+
+#l = liste_premiers(100)
+#for i in l[1:]:
+#	print(str(i) + str(miller_rabin2(i)))
+
+
 
 def fonc2(a,n):
     """int->int
