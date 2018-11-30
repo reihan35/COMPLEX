@@ -175,23 +175,34 @@ $$ r-1\ |\ pqr-1$$
 
 d'où 
 
-\begin{equation} p-1\ |\ qr-1\label{div_p}\end{equation}
-\begin{equation} q-1\ |\ pr-1\label{div_q}\end{equation}
-\begin{equation} r-1\ |\ pq-1\label{div_r}\end{equation}
+$$ p-1\ |\ qr-1 $$
+$$ q-1\ |\ pr-1 $$ 
+$$ r-1\ |\ pq-1 $$
 
-donc il existe un entier $h$ tel que $(pq-1) = h(r-1)$. De plus, $q$ et $r$ ne
-peuvent pas être consécutifs car premiers, d'où $q < r-1$. On a alors $qh < pq$
-et donc $h < p$. Comme $h$ et $p$ sont des entiers, on obtient $h \leq p-1$. On a
-aussi $h > 1$ car $pq - 1 \neq r - 1$ car $pq \neq r$ car $r$ est premier. Donc
-$h \in \{2,...,p-1\}$.\\
+et l'on peut écrire qu'il existe trois entiers $l$, $k$, $h$ tels que,
+
+\begin{equation} qr-1 = l(p-1)\label{eq:div_p}\end{equation}
+\begin{equation} pr-1 = k(q-1)\label{eq:div_q}\end{equation}
+\begin{equation} pq-1 = h(r-1)\label{eq:div_r}\end{equation}
+
+et l'on a bien $(pq-1) = h(r-1)$. De plus, $q$ et $r$ ne peuvent pas être
+consécutifs car premiers, d'où $q < r-1$. On a alors $qh < pq$ et donc $h <
+p$. Comme $h$ et $p$ sont des entiers, on obtient $h \leq p-1$. On a aussi
+$h > 1$ car $pq - 1 \neq r - 1$ car $pq \neq r$ car $r$ est premier. Donc $h
+\in \{2,...,p-1\}$.\\
 
 \end{myproof}
 
-2. Montrons qu'il existe un entier $k$ tel que $(hk-p^2)(q-1) = (p+h)(p-1)$. 
+2. Montrons qu'il existe un entier $k$ tel que 
+
+\begin{equation}
+(hk-p^2)(q-1) = (p+h)(p-1)
+\label{eq:eq-k}
+\end{equation}
 
 \begin{myproof}
 
-D'après l'\eqref{div_q}, il existe $k$ tel que $pr-1 = k(q-1)$. On a donc
+D'après l'\eqref{eq:div_q}, il existe $k$ tel que $pr-1 = k(q-1)$. On a donc
 \begin{IEEEeqnarray*}{rCl"s}
     k(q-1) &=& pr-1 \\
     &=& p(r-1) + (p-1) \\
@@ -217,15 +228,35 @@ et
 
 \end{myproof}
 
-3. Montrons que tout nombre de Carmichael $n = pqr$.
+3. Montrons qu'il n'existe qu'un nombre fini de nombres de Carmichael avec 3
+facteurs premiers.
 
 \begin{myproof}
 
-    On sait que $q = \frac{(p+h)(p-1)}{(hk-p^2)} + 1$. Alors,
+Soit $p$ un nombre premier. Notons $f(p)$ le nombre de nombres de Carmichael à 3 facteurs
+premiers dont le plus petit est $p$.
 
-    $$q \leq (p+h)(p-1) + 1$$
+Soit $h$ tel que $2 \leq h \leq p-1$. Une fois $hk - p^2$ fixé, q est
+déterminé par l'\eqref{eq:eq-k} et $r$ par l'\eqref{eq:div_r}. On obtient
+alors
 
+$$ hk - p^2 = \frac{(p+h)(p-1)}{q-1} \geq 1$$
 
+De plus, comme $p < q$, on a $p-1 < q-1$ et donc $hk - p^2 < p + h$, soit $hk -
+p^2 \leq p + h - 1$. On obtient alors $ 1 \leq hk - p^2 \leq p + h -
+1$. Pour $p$ et $h$ fixés, $hk - p^2$ prend donc ses valeurs dans un
+intervalle de taille $p + h - 2$. 
+
+De plus, on doit avoir $hk - p^2 \equiv -p^2 \mod h$. Chaque intervalle de
+taille $h$ contient donc une seule valeur possible pour $hk - p^2$.
+
+On obtient donc le nombre de choix suivant pour $hk - p^2$,
+
+    $$ \frac{p+h-2}{h} + 1 = \frac{p-2}{h} + 2$$
+
+Finalement,
+
+    $$ f(p) \leq \sum_{h=2}^{p} (\frac{p-2}{h} + 2) < (p-2)(\log p+2)$$
 
 \end{myproof}
 \end{document}
