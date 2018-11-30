@@ -1,0 +1,231 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{float}
+
+\setlength{\parindent}{1em}
+%\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+\newcommand{\hsp}{\hspace{20pt}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\algnewcommand{\algorithmicand}{\textbf{ and }}
+\algnewcommand{\algorithmicor}{\textbf{ or }}
+\algnewcommand{\OR}{\algorithmicor}
+\algnewcommand{\AND}{\algorithmicand}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+\newcommand{\myfrac}[2]{\frac{\displaystyle {#1}}{\displaystyle {#2}}}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{graphicx}
+
+\usepackage{enumitem}
+\setitemize{label=\textbullet, font=\small}
+
+%% equations
+\usepackage{amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+%% languages
+\usepackage{listingsutf8}
+\lstset{language=Python}
+\lstset{inputencoding=utf8/latin1}
+
+%% question numeration
+\newcommand{\question}[1]{\noindent \textbf{#1}~}
+
+%% theorem and proposition
+\newtheorem{prop}{Proposition}
+\newtheorem*{prop*}{Proposition}
+\newtheorem{thm}{Théorème}
+
+\newenvironment{myproof}[1][\proofname]{\proof[#1]\mbox{}\\*}{\endproof}
+
+%% references shortcuts (Arthur) 
+\usepackage{suffix}
+\renewcommand{\eqref}[1]{équation~\ref{#1}}
+\newcommand{\algoref}[1]{algorithme~\ref{#1}}
+\newcommand{\figref}[1]{figure~\ref{#1}}
+\newcommand{\tabref}[1]{tableau~\ref{#1}}
+\newcommand{\secref}[1]{section~\ref{#1}}
+\newcommand{\probref}[1]{problème~\ref{#1}}
+\newcommand{\propref}[1]{proposition~\ref{#1}}
+\newcommand{\theoremref}[1]{théorème~\ref{#1}}
+\newcommand{\chapref}[1]{chapitre~\ref{#1}}
+\WithSuffix\newcommand\algoref*[1]{algorithme~\ref{#1} p.~\pageref{#1}}
+\WithSuffix\newcommand\figref*[1]{figure~\ref{#1} p.~\pageref{#1}}
+\WithSuffix\newcommand\eqref*[1]{équation~\ref{#1} p.~\pageref{#1}}
+\WithSuffix\newcommand\tabref*[1]{tableau~\ref{#1} p.~\pageref{#1}}
+\WithSuffix\newcommand\secref*[1]{section~\ref{#1} p.~\pageref{#1}}
+\WithSuffix\newcommand\probref*[1]{problème~\ref{#1} p.~\pageref{#1}}
+\WithSuffix\newcommand\propref*[1]{proposition~\ref{#1} p.~\pageref{#1}}
+\WithSuffix\newcommand\chapref*[1]{chapitre~\ref{#1} p.~\pageref{#1}}
+
+%% equations
+\usepackage{amsthm}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage[backend=biber,uniquename=init,giveninits=true,
+             %% "et al" pour > deux auteurs, & pour exactement 2
+             uniquelist=false,maxcitenames=2,mincitenames=1,maxbibnames=99,
+             isbn=false,url=false,doi=false,bibstyle=numeric
+]{biblatex}
+\addbibresource{references.bib}
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{center}
+
+      \makebox[0.5\textwidth][r]{%
+        \includegraphics[width=0.33\textwidth]{images/sorbonne.png}%
+    }%
+
+      \vspace{4cm}
+    % Title
+    \HRule \\[0.4cm]
+    { \huge \bfseries COMPLEX - PROJET\\[0.4cm] }
+
+      \textsc{\LARGE Tests de primalité}\\[0.4cm]
+
+    \HRule \\[0.8cm]
+
+    % Author and supervisor
+    \begin{minipage}{0.4\textwidth}
+      \begin{flushleft} \large
+        Fatemeh \textsc{Hamissi}\\
+        \large
+        Kim-Anh Laura \textsc{Nguyen}\\
+        Promo 2018-2019 \\
+      \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+      \begin{flushright} \large
+        \emph{Chargé de TP :} Alexandre \textsc{Teiller}\\
+      \end{flushright}
+    \end{minipage}
+
+      \vspace{2cm}
+
+  \end{center}
+  %\end{sffamily}
+\end{titlepage}
+%\maketitle
+
+\section*{2. Test naïf et recherche des nombres de Carmichael}
+
+\question{a)}
+\begin{lstlisting}[frame=single]  % Start your code-block
+
+def first_test(n):
+    '''
+        n : entier
+        effectue le test naïf de primalité sur n
+    '''
+    if n<7:
+        if n in (2,3,5):
+            return True
+        else:
+            return False
+    if n & 1 == 0:
+        return False
+    k=3
+    r=math.sqrt(n)
+    while k<=r:
+        if n % k == 0:
+            return False
+        k+=2
+    return True
+\end{lstlisting}
+
+\question{b)} \texttt{first\_test} est exponentiel en la taille de l'entrée.\\
+
+\question{c)} \\
+\question{d)} \\
+\question{f)} \\
+
+\question{g)} Montrons qu'il n'existe qu'un nombre fini de nombres de Carmichael
+de la forme $pqr$ avec $p < q < r$ trois nombres premiers pour $p$ fixé. \\
+
+1. Soit $n$ un nombre de Carmichael de la forme $pqr$ avec $p < q < r$ trois
+nombres premiers. Montrons qu'il existe un entier $h \in \{2,...,p-1\}$ tel que
+$(pq - 1) = h(r - 1)$.
+
+\begin{myproof}
+D'après le critère de Korselt, on a :
+
+$$ p-1\ |\ pqr-1$$
+$$ q-1\ |\ pqr-1$$
+$$ r-1\ |\ pqr-1$$
+
+d'où 
+
+\begin{equation} p-1\ |\ qr-1\label{div_p}\end{equation}
+\begin{equation} q-1\ |\ pr-1\label{div_q}\end{equation}
+\begin{equation} r-1\ |\ pq-1\label{div_r}\end{equation}
+
+donc il existe un entier $h$ tel que $(pq-1) = h(r-1)$. De plus, $q$ et $r$ ne
+peuvent pas être consécutifs car premiers, d'où $q < r-1$. On a alors $qh < pq$
+et donc $h < p$. Comme $h$ et $p$ sont des entiers, on obtient $h \leq p-1$. On a
+aussi $h > 1$ car $pq - 1 \neq r - 1$ car $pq \neq r$ car $r$ est premier. Donc
+$h \in \{2,...,p-1\}$.\\
+
+\end{myproof}
+
+2. Montrons qu'il existe un entier $k$ tel que $(hk-p^2)(q-1) = (p+h)(p-1)$. 
+
+\begin{myproof}
+
+D'après l'\eqref{div_q}, il existe $k$ tel que $pr-1 = k(q-1)$. On a donc
+\begin{IEEEeqnarray*}{rCl"s}
+    k(q-1) &=& pr-1 \\
+    &=& p(r-1) + (p-1) \\
+    &=& p\ \frac{pq-1}{h} + (p-1) \\ 
+    &=& \frac{p}{h} \ (pq-1) + (p-1)\\
+\end{IEEEeqnarray*}
+
+d'où 
+\begin{IEEEeqnarray*}{rCl"s}
+    hk(q-1) &=& p (pq-1) + h(p-1)\\
+    hkq-hk&=& p^2q - p + hp - h\\
+\end{IEEEeqnarray*}
+
+et 
+\begin{IEEEeqnarray*}{rCl"s}
+    (hk-p^2)(q-1) &=& (p+h)(p-1)\\ 
+    hkq - hk - p^2q + p^2 &=& p^2-p+hp-h\\
+    hkq -hk - p^2q &=& -p + hp - h\\
+    hkq-hk&=& p^2q - p + hp - h\\
+\end{IEEEeqnarray*}
+
+    donc il existe un entier $k$ tel que $(hk-p^2)(q-1) = (p+h)(p-1)$.
+
+\end{myproof}
+
+3. Montrons que tout nombre de Carmichael $n = pqr$.
+
+\begin{myproof}
+
+    On sait que $q = \frac{(p+h)(p-1)}{(hk-p^2)} + 1$. Alors,
+
+    $$q \leq (p+h)(p-1) + 1$$
+
+
+
+\end{myproof}
+\end{document}
